@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:MoodooApp.ViewModels"
+             xmlns:models="clr-namespace:MoodooApp.Models"
+             xmlns:converters="clr-namespace:MoodooApp.Converters"
+             x:Class="MoodooApp.Pages.ChatbotPage"
+             x:DataType="viewmodel:ChatViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:SenderToColorConverter x:Key="SenderToColorConverter" />
+            <converters:SenderToAlignmentConverter x:Key="SenderToAlignmentConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <Border Grid.Row="0"
+                BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#191924}"
+                Stroke="{AppThemeBinding Light=#D1D1D1, Dark=#3A3A55}"
+                StrokeThickness="0,0,0,1" StrokeShape="Rectangle" Padding="20,14">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Border Grid.Column="0" BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 24" WidthRequest="48" HeightRequest="48">
+                    <Label Text="&#xe0c9;" FontFamily="MaterialIcons" FontSize="24" TextColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2" Margin="14,0">
+                    <Label Text="Moodie" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                    <HorizontalStackLayout Spacing="6">
+                        <Border BackgroundColor="#00E676" StrokeThickness="0" StrokeShape="RoundRectangle 4" WidthRequest="8" HeightRequest="8" VerticalOptions="Center" />
+                        <Label Text="Online · AI Companion" FontSize="12" TextColor="{AppThemeBinding Light=#626262, Dark=#A0A0B8}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+                <Label Grid.Column="2" Text="&#xe5d4;" FontFamily="MaterialIcons" FontSize="22" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
+            </Grid>
+        </Border>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Messages}" Margin="16,10">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:ChatMessage">
+                    <VerticalStackLayout Margin="0,4">
+                        <Border Padding="14,12" StrokeThickness="0"
+                                BackgroundColor="{Binding Sender, Converter={StaticResource SenderToColorConverter}}"
+                                HorizontalOptions="{Binding Sender, Converter={StaticResource SenderToAlignmentConverter}}"
+                                StrokeShape="RoundRectangle 18" MaximumWidthRequest="300">
+                            <Label Text="{Binding Text}" FontSize="15" TextColor="White" />
+                        </Border>
+                        <Label Text="{Binding Timestamp, StringFormat='{0:h:mm tt}'}"
+                               FontSize="11" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}"
+                               HorizontalOptions="{Binding Sender, Converter={StaticResource SenderToAlignmentConverter}}"
+                               Margin="4,2,4,0" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <HorizontalStackLayout Grid.Row="1" IsVisible="{Binding IsBusy}" VerticalOptions="End" HorizontalOptions="Start" Margin="30,0,0,16" Spacing="8">
+            <Border BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="12,10">
+                <Label Text="Moodie is typing..." FontSize="13" TextColor="{StaticResource Primary}" />
+            </Border>
+        </HorizontalStackLayout>
+
+        <Border Grid.Row="2"
+                BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#191924}"
+                Stroke="{AppThemeBinding Light=#D1D1D1, Dark=#3A3A55}"
+                StrokeThickness="1,0,0,0" StrokeShape="Rectangle" Padding="16,12">
+            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
+                <Border Grid.Column="0" BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#252538}"
+                        StrokeThickness="0" StrokeShape="RoundRectangle 24" Padding="16,10">
+                    <Entry Text="{Binding NewMessage}" Placeholder="Message Moodie..."
+                           ReturnType="Send" ReturnCommand="{Binding SendMessageCommand}"
+                           PlaceholderColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}"
+                           TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}"
+                           BackgroundColor="Transparent" FontSize="15" />
+                </Border>
+                <Border Grid.Column="1" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" StrokeShape="RoundRectangle 22" WidthRequest="44" HeightRequest="44">
+                    <Label Text="&#xe163;" FontFamily="MaterialIcons" FontSize="20" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>

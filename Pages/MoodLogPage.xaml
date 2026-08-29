@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:MoodooApp.ViewModels"
+             x:Class="MoodooApp.Pages.MoodLogPage"
+             x:DataType="viewmodel:MoodViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,40,24,30" Spacing="0">
+
+            <VerticalStackLayout Margin="0,0,0,24" HorizontalOptions="Center" Spacing="6">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Label Text="&#xe87d;" FontFamily="MaterialIcons" FontSize="28" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    <Label Style="{StaticResource HeaderTitle}" Text="Log your mood" />
+                </HorizontalStackLayout>
+                <Label Style="{StaticResource SubTitle}" Text="Slide to pick your current feeling" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#191924}"
+                    Stroke="{StaticResource Primary}" StrokeThickness="2"
+                    StrokeShape="RoundRectangle 100"
+                    WidthRequest="160" HeightRequest="160"
+                    HorizontalOptions="Center" Margin="0,0,0,16">
+                <Label Text="{Binding SelectedEmoji}" FontSize="88" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+
+            <Label Text="{Binding SelectedMood}" FontSize="28" FontAttributes="Bold"
+                   TextColor="{StaticResource Primary}" HorizontalOptions="Center" Margin="0,0,0,24" />
+
+            <Border Style="{StaticResource GlassCard}">
+                <VerticalStackLayout Spacing="14">
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+                        <Label Text="😫" FontSize="26" />
+                        <Label Text="😞" FontSize="26" />
+                        <Label Text="😐" FontSize="26" />
+                        <Label Text="🙂" FontSize="26" />
+                        <Label Text="😁" FontSize="26" />
+                    </HorizontalStackLayout>
+                    <Slider Minimum="1" Maximum="5" Value="{Binding Grade}"
+                            MinimumTrackColor="{StaticResource Primary}"
+                            MaximumTrackColor="{AppThemeBinding Light=#D1D1D1, Dark=#3A3A55}"
+                            ThumbColor="{StaticResource Primary}" />
+                    <Grid ColumnDefinitions="*,*">
+                        <Label Grid.Column="0" Style="{StaticResource MutedText}" Text="Terrible" HorizontalOptions="Start" />
+                        <Label Grid.Column="1" Style="{StaticResource MutedText}" Text="Excellent" HorizontalOptions="End" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <HorizontalStackLayout Margin="0,20,0,8" Spacing="8">
+                <Label Text="&#xe3c9;" FontFamily="MaterialIcons" FontSize="22" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                <Label Style="{StaticResource SectionTitle}" Text="What's on your mind?" Margin="0" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Border Style="{StaticResource GlassCard}" Padding="16">
+                <Editor Style="{StaticResource InputEditor}"
+                        Text="{Binding Thoughts}"
+                        Placeholder="Write your thoughts, feelings, or events..."
+                        HeightRequest="120" AutoSize="Disabled" />
+            </Border>
+
+            <Button Style="{StaticResource PrimaryButton}" Text="Save Mood" Command="{Binding SaveCommand}" Margin="0,24,0,0" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" Color="{StaticResource Primary}" Margin="0,10,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

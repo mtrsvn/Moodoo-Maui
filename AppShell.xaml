@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MoodooApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MoodooApp"
+    xmlns:pages="clr-namespace:MoodooApp.Pages"
+    Shell.FlyoutBehavior="Disabled">
+
+    <TabBar>
+        <Tab Title="Home">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe88a;" Size="22" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate pages:HomePage}" />
+        </Tab>
+        <Tab Title="Mood">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe3c9;" Size="22" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate pages:MoodLogPage}" />
+        </Tab>
+        <Tab Title="Insights">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe6e1;" Size="22" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate pages:InsightsPage}" />
+        </Tab>
+        <Tab Title="Chatbot">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe0b7;" Size="22" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate pages:ChatbotPage}" />
+        </Tab>
+        <Tab Title="Profile">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe7fd;" Size="22" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate pages:ProfilePage}" />
+        </Tab>
+    </TabBar>
+</Shell>
