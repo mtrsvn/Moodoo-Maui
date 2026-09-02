@@ -31,12 +31,16 @@ public static class MauiProgram
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<MoodViewModel>();
         builder.Services.AddTransient<InsightsViewModel>();
+        builder.Services.AddTransient<HistoryViewModel>();
+        builder.Services.AddTransient<MoodDetailViewModel>();
         builder.Services.AddTransient<ProfileViewModel>();
         builder.Services.AddTransient<ChatViewModel>();
 
         builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<MoodLogPage>();
         builder.Services.AddTransient<InsightsPage>();
+        builder.Services.AddTransient<HistoryPage>();
+        builder.Services.AddTransient<MoodDetailPage>();
         builder.Services.AddTransient<ProfilePage>();
         builder.Services.AddTransient<ChatbotPage>();
 

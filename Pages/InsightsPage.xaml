@@ -3,24 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:MoodooApp.ViewModels"
              xmlns:models="clr-namespace:MoodooApp.Models"
+             xmlns:converters="clr-namespace:MoodooApp.Converters"
              x:Class="MoodooApp.Pages.InsightsPage"
              x:DataType="viewmodel:InsightsViewModel"
-             Title="{Binding Title}">
+             Shell.NavBarIsVisible="False">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20,36,20,20" Spacing="0">
+        <VerticalStackLayout Padding="20,36,20,90" Spacing="0">
 
-            <VerticalStackLayout Margin="0,0,0,20">
-                <Label Style="{StaticResource HeaderTitle}" Text="Mood Insights" />
-                <Label Style="{StaticResource SubTitle}" Text="{Binding CurrentMonth}" />
-            </VerticalStackLayout>
+            <!-- Header with Title & Date Chooser -->
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,16" VerticalOptions="Center">
+                <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="2">
+                    <Label Style="{StaticResource HeaderTitle}" Text="Mood Insights" />
+                    <Label Style="{StaticResource SubTitle}" Text="Trends &amp; patterns over time" />
+                </VerticalStackLayout>
 
-            <Grid ColumnDefinitions="*,10,*,10,*" Margin="0,0,0,16">
+                <!-- Native Modern Date Chooser for Insights -->
+                <Border Grid.Column="1"
+                        BackgroundColor="{AppThemeBinding Light=#F0EFF6, Dark=#252538}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 14"
+                        Padding="12,6"
+                        VerticalOptions="Center">
+                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                        <Label Text="&#xe8df;" FontFamily="MaterialIcons" FontSize="18" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                        <DatePicker Date="{Binding SelectedDate, Mode=TwoWay}"
+                                    Format="MMMM yyyy"
+                                    FontSize="13"
+                                    FontAttributes="Bold"
+                                    TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}"
+                                    BackgroundColor="Transparent"
+                                    VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Metric Summary Cards (No score system, pure qualitative insights) -->
+            <Grid ColumnDefinitions="*,12,*,12,*" Margin="0,0,0,16">
                 <Border Grid.Column="0" Style="{StaticResource SmallCard}">
                     <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                        <Label Text="&#xe85c;" FontFamily="MaterialIcons" FontSize="20" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
-                        <Label Text="{Binding AverageScore, StringFormat='{0:F1}'}" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" HorizontalOptions="Center" />
-                        <Label Text="Avg Score" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
+                        <Label Text="&#xe873;" FontFamily="MaterialIcons" FontSize="20" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="{Binding TotalLogsCount}" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" HorizontalOptions="Center" />
+                        <Label Text="Total Logs" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
                 <Border Grid.Column="2" Style="{StaticResource SmallCard}">
@@ -33,92 +57,125 @@
                 <Border Grid.Column="4" Style="{StaticResource SmallCard}">
                     <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
                         <Label Text="&#xe87d;" FontFamily="MaterialIcons" FontSize="20" TextColor="#FFB800" HorizontalOptions="Center" />
-                        <Label Text="Happy" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" HorizontalOptions="Center" />
+                        <Label Text="{Binding TopMood}" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" HorizontalOptions="Center" />
                         <Label Text="Top Mood" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
             </Grid>
 
-            <Border Style="{StaticResource GlassCard}" Margin="0,0,0,16">
-                <VerticalStackLayout Spacing="16">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0" Style="{StaticResource SectionTitle}" Text="Weekly Overview" Margin="0" VerticalOptions="Center" />
-                        <Label Grid.Column="1" Text="Last 7 Days" Style="{StaticResource MutedText}" VerticalOptions="Center" />
+            <!-- 7-Day Flow (Horizontal Flow Cards with tap-to-inspect interaction) -->
+            <Border Style="{StaticResource GlassCard}" Margin="0,0,0,16" Padding="16,14">
+                <VerticalStackLayout Spacing="14">
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <Label Grid.Column="0" Style="{StaticResource SectionTitle}" Text="7-Day Flow" Margin="0" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="{Binding TimeframeTitle}" Style="{StaticResource MutedText}" FontSize="12" VerticalOptions="Center" />
                     </Grid>
 
-                    <Grid ColumnDefinitions="*,*,*,*,*,*,*" HeightRequest="150" Margin="0,10,0,0">
-                        <VerticalStackLayout Grid.Column="0" VerticalOptions="End" HorizontalOptions="Center" Spacing="6">
-                            <Label Text="🙂" FontSize="16" HorizontalOptions="Center" />
-                            <Border BackgroundColor="{StaticResource Primary}" HeightRequest="80" WidthRequest="20" StrokeThickness="0" StrokeShape="RoundRectangle 6" HorizontalOptions="Center" />
-                            <Label Text="Mon" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="End" HorizontalOptions="Center" Spacing="6">
-                            <Label Text="😁" FontSize="16" HorizontalOptions="Center" />
-                            <Border BackgroundColor="#00E676" HeightRequest="105" WidthRequest="20" StrokeThickness="0" StrokeShape="RoundRectangle 6" HorizontalOptions="Center" />
-                            <Label Text="Tue" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Grid.Column="2" VerticalOptions="End" HorizontalOptions="Center" Spacing="6">
-                            <Label Text="😐" FontSize="16" HorizontalOptions="Center" />
-                            <Border BackgroundColor="#FFB800" HeightRequest="60" WidthRequest="20" StrokeThickness="0" StrokeShape="RoundRectangle 6" HorizontalOptions="Center" />
-                            <Label Text="Wed" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Grid.Column="3" VerticalOptions="End" HorizontalOptions="Center" Spacing="6">
-                            <Label Text="😁" FontSize="16" HorizontalOptions="Center" />
-                            <Border BackgroundColor="#00E676" HeightRequest="105" WidthRequest="20" StrokeThickness="0" StrokeShape="RoundRectangle 6" HorizontalOptions="Center" />
-                            <Label Text="Thu" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Grid.Column="4" VerticalOptions="End" HorizontalOptions="Center" Spacing="6">
-                            <Label Text="🙂" FontSize="16" HorizontalOptions="Center" />
-                            <Border BackgroundColor="{StaticResource Primary}" HeightRequest="85" WidthRequest="20" StrokeThickness="0" StrokeShape="RoundRectangle 6" HorizontalOptions="Center" />
-                            <Label Text="Fri" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Grid.Column="5" VerticalOptions="End" HorizontalOptions="Center" Spacing="6">
-                            <Label Text="😁" FontSize="16" HorizontalOptions="Center" />
-                            <Border BackgroundColor="#00E676" HeightRequest="115" WidthRequest="20" StrokeThickness="0" StrokeShape="RoundRectangle 6" HorizontalOptions="Center" />
-                            <Label Text="Sat" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout Grid.Column="6" VerticalOptions="End" HorizontalOptions="Center" Spacing="6">
-                            <Label Text="😁" FontSize="16" HorizontalOptions="Center" />
-                            <Border BackgroundColor="#00E676" HeightRequest="120" WidthRequest="20" StrokeThickness="0" StrokeShape="RoundRectangle 6" HorizontalOptions="Center" />
-                            <Label Text="Sun" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-                    </Grid>
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout BindableLayout.ItemsSource="{Binding WeeklyStats}" Spacing="8">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="viewmodel:DayMoodStat">
+                                    <Border BackgroundColor="{Binding IsSelected, Converter={StaticResource CalendarSelectedBgConverter}}"
+                                            Stroke="{Binding ColorHex}"
+                                            StrokeThickness="{Binding IsSelected, Converter={StaticResource BoolToDoubleConverter}, ConverterParameter=2}"
+                                            StrokeShape="RoundRectangle 14"
+                                            WidthRequest="62"
+                                            HeightRequest="88"
+                                            Padding="4,8">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:InsightsViewModel}}, Path=SelectDayFlowCommand}"
+                                                                  CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
+                                            <Label Text="{Binding DayName}" FontSize="11" FontAttributes="Bold"
+                                                   TextColor="{Binding IsSelected, Converter={StaticResource CalendarSelectedDayTextConverter}}"
+                                                   HorizontalOptions="Center" />
+                                            <Label Text="{Binding Emoji}" FontSize="22" HorizontalOptions="Center" Margin="0,2" />
+                                            <Label Text="{Binding MoodText}" FontSize="10" FontAttributes="Bold"
+                                                   TextColor="{Binding IsSelected, Converter={StaticResource CalendarSelectedDayTextConverter}}"
+                                                   HorizontalOptions="Center" LineBreakMode="TailTruncation" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </ScrollView>
                 </VerticalStackLayout>
             </Border>
 
-            <Label Style="{StaticResource SectionTitle}" Text="Mood Breakdown" Margin="0,10,0,8" />
-            <Border Style="{StaticResource GlassCard}" Padding="16">
-                <VerticalStackLayout Spacing="12">
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                        <Label Grid.Column="0" Text="😁 Happy (55%)" FontSize="13" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" VerticalOptions="Center" WidthRequest="110" />
-                        <ProgressBar Grid.Column="1" Progress="0.55" ProgressColor="#00E676" VerticalOptions="Center" HeightRequest="8" />
-                        <Label Grid.Column="2" Text="8 days" Style="{StaticResource MutedText}" FontSize="12" VerticalOptions="Center" />
-                    </Grid>
-
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                        <Label Grid.Column="0" Text="🙂 Good (25%)" FontSize="13" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" VerticalOptions="Center" WidthRequest="110" />
-                        <ProgressBar Grid.Column="1" Progress="0.25" ProgressColor="{StaticResource Primary}" VerticalOptions="Center" HeightRequest="8" />
-                        <Label Grid.Column="2" Text="4 days" Style="{StaticResource MutedText}" FontSize="12" VerticalOptions="Center" />
-                    </Grid>
-
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                        <Label Grid.Column="0" Text="😐 Neutral (15%)" FontSize="13" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" VerticalOptions="Center" WidthRequest="110" />
-                        <ProgressBar Grid.Column="1" Progress="0.15" ProgressColor="#FFB800" VerticalOptions="Center" HeightRequest="8" />
-                        <Label Grid.Column="2" Text="2 days" Style="{StaticResource MutedText}" FontSize="12" VerticalOptions="Center" />
-                    </Grid>
-
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                        <Label Grid.Column="0" Text="😞 Low (5%)" FontSize="13" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" VerticalOptions="Center" WidthRequest="110" />
-                        <ProgressBar Grid.Column="1" Progress="0.05" ProgressColor="#FF5C5C" VerticalOptions="Center" HeightRequest="8" />
-                        <Label Grid.Column="2" Text="1 day" Style="{StaticResource MutedText}" FontSize="12" VerticalOptions="Center" />
-                    </Grid>
+            <!-- Interactive Mood Breakdown Section -->
+            <Label Style="{StaticResource SectionTitle}" Text="Monthly Mood Breakdown" Margin="0,4,0,2" />
+            <Label Text="Tap any mood category to filter logs below" Style="{StaticResource MutedText}" FontSize="12" Margin="0,0,0,8" />
+            <Border Style="{StaticResource GlassCard}" Padding="16" Margin="0,0,0,16">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding MoodBreakdown}" Spacing="10">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="viewmodel:MoodBreakdownItem">
+                            <Border BackgroundColor="{Binding IsSelected, Converter={StaticResource CalendarSelectedBgConverter}}"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 10"
+                                    Padding="8,6">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:InsightsViewModel}}, Path=FilterByMoodCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                                    <HorizontalStackLayout Grid.Column="0" Spacing="6" WidthRequest="110" VerticalOptions="Center">
+                                        <Label Text="{Binding Emoji}" FontSize="16" VerticalOptions="Center" />
+                                        <Label Text="{Binding MoodLabel}" FontSize="13" FontAttributes="Bold"
+                                               TextColor="{Binding IsSelected, Converter={StaticResource CalendarSelectedDayTextConverter}}"
+                                               VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                    <ProgressBar Grid.Column="1" Progress="{Binding Percentage}" ProgressColor="{Binding ProgressColor}" VerticalOptions="Center" HeightRequest="8" />
+                                    <Label Grid.Column="2" Text="{Binding DaysText}"
+                                           TextColor="{Binding IsSelected, Converter={StaticResource CalendarSelectedDayTextConverter}}"
+                                           FontSize="12" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
+            </Border>
+
+            <!-- Filtered Log Inspection List for Insights with See More action -->
+            <Grid ColumnDefinitions="*,Auto" Margin="0,4,0,8" VerticalOptions="Center">
+                <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                    <Label Text="&#xe873;" FontFamily="MaterialIcons" FontSize="18" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    <Label Style="{StaticResource SectionTitle}" Text="{Binding SelectedFilterTitle}" FontSize="15" Margin="0" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenHistoryCommand}" />
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <Label Text="See more" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    <Label Text="&#xe5cc;" FontFamily="MaterialIcons" FontSize="18" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding FilteredLogs}" Spacing="8" Margin="0,0,0,14" IsVisible="{Binding HasFilteredLogs}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:MoodEntry">
+                        <Border Style="{StaticResource SmallCard}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:InsightsViewModel}}, Path=OpenMoodDetailCommand}"
+                                                      CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Border Grid.Column="0" BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="8" WidthRequest="44" HeightRequest="44">
+                                    <Label Text="{Binding Emoji}" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                    <Label Text="{Binding Mood}" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                                    <Label Text="{Binding Thoughts, TargetNullValue='No written notes'}" FontSize="12" TextColor="{AppThemeBinding Light=#626262, Dark=#A0A0B8}" LineBreakMode="TailTruncation" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="2" Text="{Binding Timestamp, StringFormat='{0:MMM dd · h:mm tt}'}" FontSize="11" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Border Style="{StaticResource GlassCard}" Padding="16" Margin="0,0,0,14" IsVisible="{Binding HasFilteredLogs, Converter={StaticResource InvertedBoolConverter}}">
+                <Label Text="No entries recorded for this selection." Style="{StaticResource MutedText}" FontSize="13" HorizontalOptions="Center" />
             </Border>
 
         </VerticalStackLayout>

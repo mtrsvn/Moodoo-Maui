@@ -6,122 +6,154 @@
              x:Class="MoodooApp.Pages.HomePage"
              x:DataType="viewmodel:HomeViewModel">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20,36,20,20" Spacing="0">
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="20,36,20,90" Spacing="0">
 
-            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,6">
-                <VerticalStackLayout Grid.Column="0">
+                <VerticalStackLayout Margin="0,0,0,6">
                     <HorizontalStackLayout Spacing="6">
-                        <Label Style="{StaticResource HeaderTitle}" Text="Good evening," />
-                        <Label Style="{StaticResource HeaderTitle}" Text="User" TextColor="{StaticResource Primary}" />
+                        <Label Style="{StaticResource HeaderTitle}" Text="Good day," />
+                        <Label Style="{StaticResource HeaderTitle}" Text="{Binding CurrentUser.Username, TargetNullValue='Friend'}" TextColor="{StaticResource Primary}" />
                     </HorizontalStackLayout>
-                    <Label Style="{StaticResource SubTitle}" Text="How are you feeling tonight?" />
+                    <Label Style="{StaticResource SubTitle}" Text="How are you feeling right now?" />
                 </VerticalStackLayout>
-                <Border Grid.Column="1" BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 22" WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
-                    <Label Text="&#xe7fd;" FontFamily="MaterialIcons" FontSize="24" TextColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
-            </Grid>
 
-            <Border Style="{StaticResource GlassCard}" Margin="0,20,0,0">
-                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                    <Border Grid.Column="0" BackgroundColor="#26FFB800" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="10" WidthRequest="50" HeightRequest="50">
-                        <Label Text="{Binding LatestMood.Emoji, TargetNullValue='😶'}" FontSize="26" HorizontalOptions="Center" VerticalOptions="Center" />
+                <!-- Daily Summary Banner -->
+                <Border Style="{StaticResource GlassCard}" Margin="0,20,0,0">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenAboutYourDayCommand}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                        <Border Grid.Column="0" BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="8" WidthRequest="52" HeightRequest="52">
+                            <Label Text="{Binding AiSummaryEmoji}" FontSize="28" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3">
+                            <Label FontSize="17" FontAttributes="Bold" Text="{Binding AiSummaryHeadline}" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                            <Label Style="{StaticResource SubTitle}" Text="{Binding AiSummaryText}" FontSize="12" LineHeight="1.2" LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="&#xe5cc;" FontFamily="MaterialIcons" FontSize="20" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Grid ColumnDefinitions="*,12,*" Margin="0,12,0,0">
+                    <Border Grid.Column="0" Style="{StaticResource GlassCard}">
+                        <VerticalStackLayout Spacing="8">
+                            <Border BackgroundColor="#26FF7E00" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="44" HeightRequest="44">
+                                <Label Text="&#xe80e;" FontFamily="MaterialIcons" FontSize="24" TextColor="#FF7E00" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label FontSize="32" FontAttributes="Bold" Text="7" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                            <Label Style="{StaticResource SubTitle}" Text="Day streak" FontSize="13" />
+                        </VerticalStackLayout>
                     </Border>
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                        <Label Style="{StaticResource MutedText}" Text="ABOUT YOUR DAY" CharacterSpacing="1.5" />
-                        <Label FontSize="18" FontAttributes="Bold" Text="{Binding LatestMood.Mood, TargetNullValue='No Entry Yet'}" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                        <Label Style="{StaticResource SubTitle}" Text="{Binding LatestMood.Thoughts, TargetNullValue='Tap the Mood tab to log how you feel.'}" FontSize="13" LineBreakMode="TailTruncation" />
-                    </VerticalStackLayout>
-                    <Label Grid.Column="2" Text="&#xe5cc;" FontFamily="MaterialIcons" FontSize="22" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
+                    <Border Grid.Column="2" Style="{StaticResource GlassCard}">
+                        <VerticalStackLayout Spacing="8">
+                            <Border BackgroundColor="#2600D1FF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="44" HeightRequest="44">
+                                <Label Text="&#xe873;" FontFamily="MaterialIcons" FontSize="24" TextColor="#00D1FF" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label FontSize="32" FontAttributes="Bold" Text="{Binding RecentMoods.Count}" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                            <Label Style="{StaticResource SubTitle}" Text="Total entries" FontSize="13" />
+                        </VerticalStackLayout>
+                    </Border>
                 </Grid>
-            </Border>
 
-            <Grid ColumnDefinitions="*,12,*" Margin="0,12,0,0">
-                <Border Grid.Column="0" Style="{StaticResource GlassCard}">
-                    <VerticalStackLayout Spacing="8">
-                        <Border BackgroundColor="#26FF7E00" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="44" HeightRequest="44">
-                            <Label Text="&#xe80e;" FontFamily="MaterialIcons" FontSize="24" TextColor="#FF7E00" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Label FontSize="32" FontAttributes="Bold" Text="7" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                        <Label Style="{StaticResource SubTitle}" Text="Day streak" FontSize="13" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Column="2" Style="{StaticResource GlassCard}">
-                    <VerticalStackLayout Spacing="8">
-                        <Border BackgroundColor="#2600D1FF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="44" HeightRequest="44">
-                            <Label Text="&#xe873;" FontFamily="MaterialIcons" FontSize="24" TextColor="#00D1FF" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Label FontSize="32" FontAttributes="Bold" Text="{Binding RecentMoods.Count}" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                        <Label Style="{StaticResource SubTitle}" Text="Total entries" FontSize="13" />
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
+                <Label Style="{StaticResource SectionTitle}" Text="Suggested for you" Margin="0,20,0,2" />
+                <Label Style="{StaticResource SubTitle}" Text="Based on your current mood" FontSize="13" Margin="0,0,0,10" />
 
-            <Label Style="{StaticResource SectionTitle}" Text="Suggested for you" Margin="0,20,0,2" />
-            <Label Style="{StaticResource SubTitle}" Text="Based on your current mood" FontSize="13" Margin="0,0,0,10" />
-
-            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
-                <HorizontalStackLayout Spacing="12">
-                    <Border Style="{StaticResource SmallCard}" WidthRequest="140">
-                        <VerticalStackLayout Spacing="10">
-                            <Border BackgroundColor="#2600E676" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
-                                <Label Text="&#xeb4c;" FontFamily="MaterialIcons" FontSize="22" TextColor="#00E676" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Label Text="Meditate" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                            <Label Text="5 min calm session" Style="{StaticResource MutedText}" FontSize="12" />
-                        </VerticalStackLayout>
-                    </Border>
-                    <Border Style="{StaticResource SmallCard}" WidthRequest="140">
-                        <VerticalStackLayout Spacing="10">
-                            <Border BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
-                                <Label Text="&#xe865;" FontFamily="MaterialIcons" FontSize="22" TextColor="#7E66EF" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Label Text="Journal" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                            <Label Text="Write your thoughts" Style="{StaticResource MutedText}" FontSize="12" />
-                        </VerticalStackLayout>
-                    </Border>
-                    <Border Style="{StaticResource SmallCard}" WidthRequest="140">
-                        <VerticalStackLayout Spacing="10">
-                            <Border BackgroundColor="#26FF7E00" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
-                                <Label Text="&#xe566;" FontFamily="MaterialIcons" FontSize="22" TextColor="#FF7E00" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Label Text="Go for a walk" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                            <Label Text="Get some fresh air" Style="{StaticResource MutedText}" FontSize="12" />
-                        </VerticalStackLayout>
-                    </Border>
-                    <Border Style="{StaticResource SmallCard}" WidthRequest="140">
-                        <VerticalStackLayout Spacing="10">
-                            <Border BackgroundColor="#2600D1FF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
-                                <Label Text="&#xe405;" FontFamily="MaterialIcons" FontSize="22" TextColor="#00D1FF" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Label Text="Listen to music" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                            <Label Text="Lift your spirits" Style="{StaticResource MutedText}" FontSize="12" />
-                        </VerticalStackLayout>
-                    </Border>
-                </HorizontalStackLayout>
-            </ScrollView>
-
-            <Label Style="{StaticResource SectionTitle}" Text="Recent History" Margin="0,20,0,8" />
-
-            <CollectionView ItemsSource="{Binding RecentMoods}" HeightRequest="360">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:MoodEntry">
-                        <Border Style="{StaticResource SmallCard}">
-                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
-                                <Border Grid.Column="0" BackgroundColor="#197E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="8" WidthRequest="48" HeightRequest="48">
-                                    <Label Text="{Binding Emoji}" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                    <HorizontalStackLayout Spacing="12">
+                        <Border Style="{StaticResource SmallCard}" WidthRequest="140">
+                            <VerticalStackLayout Spacing="10">
+                                <Border BackgroundColor="#2600E676" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
+                                    <Label Text="&#xeb4c;" FontFamily="MaterialIcons" FontSize="22" TextColor="#00E676" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
-                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3">
-                                    <Label Text="{Binding Mood}" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                                    <Label Text="{Binding Thoughts}" FontSize="12" TextColor="{AppThemeBinding Light=#626262, Dark=#A0A0B8}" LineBreakMode="TailTruncation" />
-                                </VerticalStackLayout>
-                                <Label Grid.Column="2" Text="{Binding Timestamp, StringFormat='{0:MMM dd}'}" FontSize="12" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
-                            </Grid>
+                                <Label Text="Meditate" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                                <Label Text="5 min calm session" Style="{StaticResource MutedText}" FontSize="12" />
+                            </VerticalStackLayout>
                         </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                        <Border Style="{StaticResource SmallCard}" WidthRequest="140">
+                            <VerticalStackLayout Spacing="10">
+                                <Border BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
+                                    <Label Text="&#xe865;" FontFamily="MaterialIcons" FontSize="22" TextColor="#7E66EF" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Journal" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                                <Label Text="Write your thoughts" Style="{StaticResource MutedText}" FontSize="12" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Style="{StaticResource SmallCard}" WidthRequest="140">
+                            <VerticalStackLayout Spacing="10">
+                                <Border BackgroundColor="#26FF7E00" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
+                                    <Label Text="&#xe566;" FontFamily="MaterialIcons" FontSize="22" TextColor="#FF7E00" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Go for a walk" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                                <Label Text="Get some fresh air" Style="{StaticResource MutedText}" FontSize="12" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Style="{StaticResource SmallCard}" WidthRequest="140">
+                            <VerticalStackLayout Spacing="10">
+                                <Border BackgroundColor="#2600D1FF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
+                                    <Label Text="&#xe405;" FontFamily="MaterialIcons" FontSize="22" TextColor="#00D1FF" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Listen to music" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                                <Label Text="Lift your spirits" Style="{StaticResource MutedText}" FontSize="12" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </HorizontalStackLayout>
+                </ScrollView>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                <!-- Recent History with 'See More' action on right -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,20,0,8" VerticalOptions="Center">
+                    <Label Grid.Column="0" Style="{StaticResource SectionTitle}" Text="Recent History" Margin="0" VerticalOptions="Center" />
+                    <HorizontalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenHistoryCommand}" />
+                        </HorizontalStackLayout.GestureRecognizers>
+                        <Label Text="See more" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                        <Label Text="&#xe5cc;" FontFamily="MaterialIcons" FontSize="18" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding RecentMoods}" Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:MoodEntry">
+                            <Border Style="{StaticResource SmallCard}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeViewModel}}, Path=OpenMoodDetailCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                    <Border Grid.Column="0" BackgroundColor="#197E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="8" WidthRequest="48" HeightRequest="48">
+                                        <Label Text="{Binding Emoji}" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3">
+                                        <Label Text="{Binding Mood}" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                                        <Label Text="{Binding Thoughts}" FontSize="12" TextColor="{AppThemeBinding Light=#626262, Dark=#A0A0B8}" LineBreakMode="TailTruncation" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="2" Text="{Binding Timestamp, StringFormat='{0:MMM dd}'}" FontSize="12" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Floating Action Button (FAB) for Mood Logging -->
+        <Border BackgroundColor="{StaticResource Primary}"
+                Stroke="{StaticResource PrimaryLight}"
+                StrokeThickness="1.5"
+                StrokeShape="RoundRectangle 30"
+                WidthRequest="60"
+                HeightRequest="60"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,0,24,24"
+                Shadow="{Shadow Brush={StaticResource PrimaryDark}, Offset='0,6', Radius=16, Opacity=0.4}">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OpenMoodLogCommand}" />
+            </Border.GestureRecognizers>
+            <Label Text="&#xe145;" FontFamily="MaterialIcons" FontSize="30" TextColor="White"
+                   HorizontalOptions="Center" VerticalOptions="Center" />
+        </Border>
+    </Grid>
 </ContentPage>

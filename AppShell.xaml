@@ -14,12 +14,6 @@
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate pages:HomePage}" />
         </Tab>
-        <Tab Title="Mood">
-            <Tab.Icon>
-                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe3c9;" Size="22" />
-            </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate pages:MoodLogPage}" />
-        </Tab>
         <Tab Title="Insights">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe6e1;" Size="22" />

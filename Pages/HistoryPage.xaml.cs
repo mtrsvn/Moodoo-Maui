@@ -2,11 +2,11 @@ using MoodooApp.ViewModels;
 
 namespace MoodooApp.Pages;
 
-public partial class InsightsPage : ContentPage
+public partial class HistoryPage : ContentPage
 {
-    private readonly InsightsViewModel _viewModel;
+    private readonly HistoryViewModel _viewModel;
 
-    public InsightsPage(InsightsViewModel viewModel)
+    public HistoryPage(HistoryViewModel viewModel)
     {
         InitializeComponent();
         _viewModel = viewModel;

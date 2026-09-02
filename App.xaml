@@ -1,7 +1,8 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<?xml version = "1.0" encoding = "UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MoodooApp"
+             xmlns:converters="clr-namespace:MoodooApp.Converters"
              x:Class="MoodooApp.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,6 +10,28 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToColorConverter x:Key="CalendarSelectedBgConverter"
+                                             TrueColor="{StaticResource Primary}"
+                                             FalseColor="{AppThemeBinding Light=#FFFFFF, Dark=#1E1E2C}" />
+            
+            <converters:BoolToColorConverter x:Key="CalendarSelectedBorderConverter"
+                                             TrueColor="{StaticResource PrimaryLight}"
+                                             FalseColor="{AppThemeBinding Light=#E6E6F0, Dark=#2E2E42}" />
+
+            <converters:BoolToTextColorConverter x:Key="CalendarSelectedDayTextConverter"
+                                                 TrueTextColor="White"
+                                                 FalseTextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+
+            <converters:BoolToDoubleConverter x:Key="MonthOpacityConverter"
+                                              TrueValue="1.0"
+                                              FalseValue="0.3" />
+
+            <converters:BoolToDoubleConverter x:Key="BoolToDoubleConverter"
+                                              TrueValue="2.0"
+                                              FalseValue="1.0" />
+
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

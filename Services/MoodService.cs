@@ -29,20 +29,136 @@ public class MoodService
     {
         var entries = new List<MoodEntry>
         {
-            new() { Mood = "Happy",     Emoji = "😁", Grade = 5, Thoughts = "Had a really productive day! Finished my project early and went for a walk.", Timestamp = DateTime.Now.AddHours(-2) },
-            new() { Mood = "Good",      Emoji = "🙂", Grade = 4, Thoughts = "Lunch with a friend was fun. Feeling grateful today.", Timestamp = DateTime.Now.AddDays(-1) },
-            new() { Mood = "Neutral",   Emoji = "😐", Grade = 3, Thoughts = "Average day. Nothing special happened.", Timestamp = DateTime.Now.AddDays(-2) },
-            new() { Mood = "Happy",     Emoji = "😁", Grade = 5, Thoughts = "Got amazing news from work. Promotion might be coming!", Timestamp = DateTime.Now.AddDays(-3) },
-            new() { Mood = "Bad",       Emoji = "😞", Grade = 2, Thoughts = "Didn't sleep well. Headache all day.", Timestamp = DateTime.Now.AddDays(-4) },
-            new() { Mood = "Neutral",   Emoji = "😐", Grade = 3, Thoughts = "Work was okay. A bit monotonous.", Timestamp = DateTime.Now.AddDays(-5) },
-            new() { Mood = "Good",      Emoji = "🙂", Grade = 4, Thoughts = "Cooked a new recipe tonight and it turned out great.", Timestamp = DateTime.Now.AddDays(-6) },
-            new() { Mood = "Terrible",  Emoji = "😫", Grade = 1, Thoughts = "Very stressful day. Too many deadlines.", Timestamp = DateTime.Now.AddDays(-7) },
-            new() { Mood = "Happy",     Emoji = "😁", Grade = 5, Thoughts = "Weekend! Went hiking with family.", Timestamp = DateTime.Now.AddDays(-8) },
-            new() { Mood = "Good",      Emoji = "🙂", Grade = 4, Thoughts = "Watched a great movie. Relaxing evening.", Timestamp = DateTime.Now.AddDays(-9) },
-            new() { Mood = "Neutral",   Emoji = "😐", Grade = 3, Thoughts = "Just a regular Monday.", Timestamp = DateTime.Now.AddDays(-10) },
-            new() { Mood = "Bad",       Emoji = "😞", Grade = 2, Thoughts = "Felt anxious about upcoming presentation.", Timestamp = DateTime.Now.AddDays(-11) },
-            new() { Mood = "Good",      Emoji = "🙂", Grade = 4, Thoughts = "Presentation went well! Everyone loved it.", Timestamp = DateTime.Now.AddDays(-12) },
-            new() { Mood = "Happy",     Emoji = "😁", Grade = 5, Thoughts = "Best day this month. Everything went right.", Timestamp = DateTime.Now.AddDays(-13) },
+            // TODAY: Multiple entries (Morning, Afternoon, Evening)
+            new() {
+                Mood = "Happy",
+                Emoji = "😁",
+                Grade = 5,
+                Thoughts = "Finished all tasks and had an awesome workout session!",
+                Timestamp = DateTime.Today.AddHours(20).AddMinutes(30),
+                Tags = new() { "Productive", "Excited", "Motivated" },
+                Activities = new() { "Work", "Exercise", "Hobbies" }
+            },
+            new() {
+                Mood = "Good",
+                Emoji = "🙂",
+                Grade = 4,
+                Thoughts = "Had delicious lunch with colleagues. Work is going smoothly.",
+                Timestamp = DateTime.Today.AddHours(13).AddMinutes(15),
+                Tags = new() { "Grateful", "Calm" },
+                Activities = new() { "Work", "Eating Well", "Friends" }
+            },
+            new() {
+                Mood = "Neutral",
+                Emoji = "😐",
+                Grade = 3,
+                Thoughts = "Morning routine felt a bit slow and sleepy.",
+                Timestamp = DateTime.Today.AddHours(8).AddMinutes(45),
+                Tags = new() { "Tired" },
+                Activities = new() { "Sleep" }
+            },
+
+            // YESTERDAY: Multiple entries
+            new() {
+                Mood = "Happy",
+                Emoji = "😁",
+                Grade = 5,
+                Thoughts = "Family dinner was lovely. Watched movie together.",
+                Timestamp = DateTime.Today.AddDays(-1).AddHours(21),
+                Tags = new() { "Loved", "Grateful" },
+                Activities = new() { "Family", "Hobbies", "Eating Well" }
+            },
+            new() {
+                Mood = "Bad",
+                Emoji = "😞",
+                Grade = 2,
+                Thoughts = "Traffic was stressful and had a slight headache.",
+                Timestamp = DateTime.Today.AddDays(-1).AddHours(14),
+                Tags = new() { "Anxious", "Tired" },
+                Activities = new() { "Work" }
+            },
+            new() {
+                Mood = "Good",
+                Emoji = "🙂",
+                Grade = 4,
+                Thoughts = "Good morning walk in the neighborhood.",
+                Timestamp = DateTime.Today.AddDays(-1).AddHours(7).AddMinutes(30),
+                Tags = new() { "Calm", "Motivated" },
+                Activities = new() { "Exercise" }
+            },
+
+            // 2 DAYS AGO: Multiple entries
+            new() {
+                Mood = "Good",
+                Emoji = "🙂",
+                Grade = 4,
+                Thoughts = "Cooked a nice dinner and listened to music.",
+                Timestamp = DateTime.Today.AddDays(-2).AddHours(19),
+                Tags = new() { "Calm", "Grateful" },
+                Activities = new() { "Music", "Eating Well" }
+            },
+            new() {
+                Mood = "Happy",
+                Emoji = "😁",
+                Grade = 5,
+                Thoughts = "Big feature release deployed with zero bugs!",
+                Timestamp = DateTime.Today.AddDays(-2).AddHours(11),
+                Tags = new() { "Productive", "Excited" },
+                Activities = new() { "Work" }
+            },
+
+            // 3 DAYS AGO
+            new() {
+                Mood = "Happy",
+                Emoji = "😁",
+                Grade = 5,
+                Thoughts = "Weekend hike with friends. Weather was amazing!",
+                Timestamp = DateTime.Today.AddDays(-3).AddHours(16),
+                Tags = new() { "Excited", "Grateful" },
+                Activities = new() { "Friends", "Exercise" }
+            },
+            new() {
+                Mood = "Good",
+                Emoji = "🙂",
+                Grade = 4,
+                Thoughts = "Early morning coffee and journaling.",
+                Timestamp = DateTime.Today.AddDays(-3).AddHours(9),
+                Tags = new() { "Calm" },
+                Activities = new() { "Hobbies" }
+            },
+
+            // 4 DAYS AGO
+            new() {
+                Mood = "Neutral",
+                Emoji = "😐",
+                Grade = 3,
+                Thoughts = "Routine chores and cleaning around the house.",
+                Timestamp = DateTime.Today.AddDays(-4).AddHours(15),
+                Tags = new() { "Tired" },
+                Activities = new() { "Work" }
+            },
+
+            // 5 DAYS AGO
+            new() {
+                Mood = "Good",
+                Emoji = "🙂",
+                Grade = 4,
+                Thoughts = "Read 50 pages of my new book.",
+                Timestamp = DateTime.Today.AddDays(-5).AddHours(20),
+                Tags = new() { "Calm" },
+                Activities = new() { "Hobbies" }
+            },
+
+            // 6 DAYS AGO
+            new() {
+                Mood = "Happy",
+                Emoji = "😁",
+                Grade = 5,
+                Thoughts = "Great team meeting and productive brainstorm session.",
+                Timestamp = DateTime.Today.AddDays(-6).AddHours(14),
+                Tags = new() { "Motivated", "Productive" },
+                Activities = new() { "Work" }
+            }
         };
 
         Moods = new ObservableCollection<MoodEntry>(entries);

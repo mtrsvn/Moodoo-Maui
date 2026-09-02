@@ -2,65 +2,162 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:MoodooApp.ViewModels"
+             xmlns:models="clr-namespace:MoodooApp.Models"
              x:Class="MoodooApp.Pages.MoodLogPage"
-             x:DataType="viewmodel:MoodViewModel">
+             x:DataType="viewmodel:MoodViewModel"
+             Shell.NavBarIsVisible="False">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24,40,24,30" Spacing="0">
+        <VerticalStackLayout Padding="20,20,20,36" Spacing="0">
 
-            <VerticalStackLayout Margin="0,0,0,24" HorizontalOptions="Center" Spacing="6">
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-                    <Label Text="&#xe87d;" FontFamily="MaterialIcons" FontSize="28" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
-                    <Label Style="{StaticResource HeaderTitle}" Text="Log your mood" />
-                </HorizontalStackLayout>
-                <Label Style="{StaticResource SubTitle}" Text="Slide to pick your current feeling" HorizontalOptions="Center" />
-            </VerticalStackLayout>
+            <!-- Header with Close button -->
+            <Grid ColumnDefinitions="Auto,*" Margin="0,0,0,16" VerticalOptions="Center">
+                <Border Grid.Column="0"
+                        BackgroundColor="{AppThemeBinding Light=#EFEFEF, Dark=#252538}"
+                        StrokeThickness="0" StrokeShape="RoundRectangle 20"
+                        WidthRequest="40" HeightRequest="40" VerticalOptions="Center">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClosePageCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="&#xe5c4;" FontFamily="MaterialIcons" FontSize="20"
+                           TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
 
-            <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#191924}"
-                    Stroke="{StaticResource Primary}" StrokeThickness="2"
-                    StrokeShape="RoundRectangle 100"
-                    WidthRequest="160" HeightRequest="160"
-                    HorizontalOptions="Center" Margin="0,0,0,16">
-                <Label Text="{Binding SelectedEmoji}" FontSize="88" HorizontalOptions="Center" VerticalOptions="Center" />
-            </Border>
+                <VerticalStackLayout Grid.Column="1" Margin="12,0,0,0" VerticalOptions="Center" Spacing="2">
+                    <Label Style="{StaticResource HeaderTitle}" Text="Check-in" FontSize="22" />
+                    <Label Style="{StaticResource SubTitle}" Text="How are you feeling right now?" FontSize="13" />
+                </VerticalStackLayout>
+            </Grid>
 
-            <Label Text="{Binding SelectedMood}" FontSize="28" FontAttributes="Bold"
-                   TextColor="{StaticResource Primary}" HorizontalOptions="Center" Margin="0,0,0,24" />
+            <!-- Hero Mood Selector -->
+            <Border Style="{StaticResource GlassCard}" Padding="16,20" Margin="0,0,0,16">
+                <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#191924}"
+                            Stroke="{Binding SelectedColor}" StrokeThickness="2.5"
+                            StrokeShape="RoundRectangle 45"
+                            WidthRequest="86" HeightRequest="86"
+                            HorizontalOptions="Center">
+                        <Label Text="{Binding SelectedEmoji}" FontSize="48" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
 
-            <Border Style="{StaticResource GlassCard}">
-                <VerticalStackLayout Spacing="14">
-                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
-                        <Label Text="😫" FontSize="26" />
-                        <Label Text="😞" FontSize="26" />
-                        <Label Text="😐" FontSize="26" />
-                        <Label Text="🙂" FontSize="26" />
-                        <Label Text="😁" FontSize="26" />
+                    <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                        <Label Text="{Binding SelectedMood}" FontSize="22" FontAttributes="Bold"
+                               TextColor="{Binding SelectedColor}" HorizontalOptions="Center" />
+                        <Label Text="{Binding SelectedDescription}" Style="{StaticResource MutedText}" FontSize="13" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Mood Options Selector Row -->
+                    <HorizontalStackLayout BindableLayout.ItemsSource="{Binding MoodOptions}"
+                                           Spacing="10"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           Margin="0,6,0,4">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodel:MoodOption">
+                                <Border BackgroundColor="{AppThemeBinding Light=#F3F2FA, Dark=#252538}"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 14"
+                                        WidthRequest="48"
+                                        HeightRequest="48"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MoodViewModel}}, Path=SelectMoodCommand}"
+                                                              CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                    <Label Text="{Binding Emoji}" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
                     </HorizontalStackLayout>
-                    <Slider Minimum="1" Maximum="5" Value="{Binding Grade}"
-                            MinimumTrackColor="{StaticResource Primary}"
-                            MaximumTrackColor="{AppThemeBinding Light=#D1D1D1, Dark=#3A3A55}"
-                            ThumbColor="{StaticResource Primary}" />
-                    <Grid ColumnDefinitions="*,*">
-                        <Label Grid.Column="0" Style="{StaticResource MutedText}" Text="Terrible" HorizontalOptions="Start" />
-                        <Label Grid.Column="1" Style="{StaticResource MutedText}" Text="Excellent" HorizontalOptions="End" />
-                    </Grid>
                 </VerticalStackLayout>
             </Border>
 
-            <HorizontalStackLayout Margin="0,20,0,8" Spacing="8">
-                <Label Text="&#xe3c9;" FontFamily="MaterialIcons" FontSize="22" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
-                <Label Style="{StaticResource SectionTitle}" Text="What's on your mind?" Margin="0" VerticalOptions="Center" />
+            <!-- Feelings / Emotion Tags -->
+            <VerticalStackLayout Margin="0,0,0,14" Spacing="8">
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                    <Label Text="&#xe87d;" FontFamily="MaterialIcons" FontSize="18" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    <Label Style="{StaticResource SectionTitle}" Text="What best describes it?" FontSize="15" Margin="0" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <FlexLayout BindableLayout.ItemsSource="{Binding EmotionTags}"
+                            Wrap="Wrap"
+                            Direction="Row"
+                            AlignItems="Start">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:SelectableItem">
+                            <Border BackgroundColor="{Binding IsSelected, Converter={StaticResource CalendarSelectedBgConverter}}"
+                                    Stroke="{Binding IsSelected, Converter={StaticResource CalendarSelectedBorderConverter}}"
+                                    StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 18"
+                                    Padding="12,6"
+                                    Margin="0,0,8,8">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MoodViewModel}}, Path=ToggleTagCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                    <Label Text="{Binding Icon}" FontSize="13" VerticalOptions="Center" />
+                                    <Label Text="{Binding Name}" FontSize="12" FontAttributes="Bold"
+                                           TextColor="{Binding IsSelected, Converter={StaticResource CalendarSelectedDayTextConverter}}"
+                                           VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </VerticalStackLayout>
+
+            <!-- Activity Factors -->
+            <VerticalStackLayout Margin="0,0,0,14" Spacing="8">
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                    <Label Text="&#xeb4c;" FontFamily="MaterialIcons" FontSize="18" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    <Label Style="{StaticResource SectionTitle}" Text="What were you doing?" FontSize="15" Margin="0" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <FlexLayout BindableLayout.ItemsSource="{Binding ActivityFactors}"
+                            Wrap="Wrap"
+                            Direction="Row"
+                            AlignItems="Start">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:SelectableItem">
+                            <Border BackgroundColor="{Binding IsSelected, Converter={StaticResource CalendarSelectedBgConverter}}"
+                                    Stroke="{Binding IsSelected, Converter={StaticResource CalendarSelectedBorderConverter}}"
+                                    StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 18"
+                                    Padding="12,6"
+                                    Margin="0,0,8,8">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MoodViewModel}}, Path=ToggleActivityCommand}"
+                                                          CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                    <Label Text="{Binding Icon}" FontSize="13" VerticalOptions="Center" />
+                                    <Label Text="{Binding Name}" FontSize="12" FontAttributes="Bold"
+                                           TextColor="{Binding IsSelected, Converter={StaticResource CalendarSelectedDayTextConverter}}"
+                                           VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </VerticalStackLayout>
+
+            <!-- Thoughts Editor -->
+            <HorizontalStackLayout Margin="0,0,0,8" Spacing="8">
+                <Label Text="&#xe865;" FontFamily="MaterialIcons" FontSize="18" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                <Label Style="{StaticResource SectionTitle}" Text="Write a reflection" FontSize="15" Margin="0" VerticalOptions="Center" />
             </HorizontalStackLayout>
 
-            <Border Style="{StaticResource GlassCard}" Padding="16">
+            <Border Style="{StaticResource GlassCard}" Padding="14" Margin="0,0,0,18">
                 <Editor Style="{StaticResource InputEditor}"
                         Text="{Binding Thoughts}"
-                        Placeholder="Write your thoughts, feelings, or events..."
-                        HeightRequest="120" AutoSize="Disabled" />
+                        Placeholder="What happened? Jot down anything on your mind..."
+                        HeightRequest="90" AutoSize="Disabled" />
             </Border>
 
-            <Button Style="{StaticResource PrimaryButton}" Text="Save Mood" Command="{Binding SaveCommand}" Margin="0,24,0,0" />
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" Color="{StaticResource Primary}" Margin="0,10,0,0" />
+            <Button Style="{StaticResource PrimaryButton}" Text="Save Check-in" Command="{Binding SaveMoodCommand}" HeightRequest="50" CornerRadius="14" />
 
         </VerticalStackLayout>
     </ScrollView>

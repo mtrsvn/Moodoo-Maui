@@ -3,99 +3,117 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:MoodooApp.ViewModels"
              x:Class="MoodooApp.Pages.ProfilePage"
-             x:DataType="viewmodel:ProfileViewModel">
+             x:DataType="viewmodel:ProfileViewModel"
+             Shell.NavBarIsVisible="False">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24,40,24,30" Spacing="0">
+        <VerticalStackLayout Padding="20,16,20,80" Spacing="0">
 
-            <VerticalStackLayout HorizontalOptions="Center" Margin="0,0,0,28" Spacing="10">
-                <Border BackgroundColor="{AppThemeBinding Light=#DDD8FB, Dark=#252538}"
-                        Stroke="{StaticResource Primary}" StrokeThickness="2"
-                        StrokeShape="RoundRectangle 56"
-                        WidthRequest="112" HeightRequest="112" HorizontalOptions="Center">
-                    <Label Text="&#xe7fd;" FontFamily="MaterialIcons" FontSize="58" TextColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
-                <Label Text="{Binding CurrentUser.FullName, TargetNullValue='Mark Developer'}" Style="{StaticResource HeaderTitle}" HorizontalOptions="Center" FontSize="24" />
-                <Label Text="{Binding CurrentUser.Email, TargetNullValue='mark@moodoo.app'}" Style="{StaticResource SubTitle}" HorizontalOptions="Center" />
-                <Border BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="12,6" HorizontalOptions="Center">
-                    <HorizontalStackLayout Spacing="6">
-                        <Label Text="&#xe838;" FontFamily="MaterialIcons" FontSize="14" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
-                        <Label Text="Premium Member" FontSize="13" TextColor="{StaticResource Primary}" FontAttributes="Bold" VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                </Border>
-            </VerticalStackLayout>
-
-            <Grid ColumnDefinitions="*,12,*,12,*" Margin="0,0,0,24">
-                <Border Grid.Column="0" Style="{StaticResource SmallCard}">
-                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                        <Label Text="14" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
-                        <Label Text="Entries" Style="{StaticResource MutedText}" HorizontalOptions="Center" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Column="2" Style="{StaticResource SmallCard}">
-                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                        <Label Text="7" FontSize="24" FontAttributes="Bold" TextColor="#FF7E00" HorizontalOptions="Center" />
-                        <Label Text="Streak" Style="{StaticResource MutedText}" HorizontalOptions="Center" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Column="4" Style="{StaticResource SmallCard}">
-                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                        <Label Text="3.8" FontSize="24" FontAttributes="Bold" TextColor="#00E676" HorizontalOptions="Center" />
-                        <Label Text="Avg mood" Style="{StaticResource MutedText}" HorizontalOptions="Center" />
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
-
-            <Label Style="{StaticResource SectionTitle}" Text="Preferences" Margin="0,0,0,8" />
-            <Border Style="{StaticResource GlassCard}" Padding="0">
-                <VerticalStackLayout>
-                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="20,16" ColumnSpacing="14">
-                        <Border Grid.Column="0" BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
-                            <Label Text="&#xe3a6;" FontFamily="MaterialIcons" FontSize="20" TextColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                            <Label Text="Dark Mode" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                            <Label Text="Switch app appearance" Style="{StaticResource MutedText}" />
-                        </VerticalStackLayout>
-                        <Switch Grid.Column="2" IsToggled="{Binding IsDarkTheme}" OnColor="{StaticResource Primary}" VerticalOptions="Center" />
-                    </Grid>
-                    <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#D1D1D1, Dark=#3A3A55}" Margin="20,0" />
-                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="20,16" ColumnSpacing="14">
-                        <Border Grid.Column="0" BackgroundColor="#2600D1FF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
-                            <Label Text="&#xe7f4;" FontFamily="MaterialIcons" FontSize="20" TextColor="#00D1FF" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                            <Label Text="Reminders" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                            <Label Text="Daily mood check-in" Style="{StaticResource MutedText}" />
-                        </VerticalStackLayout>
-                        <Switch Grid.Column="2" OnColor="{StaticResource Primary}" IsToggled="True" VerticalOptions="Center" />
-                    </Grid>
-                    <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#D1D1D1, Dark=#3A3A55}" Margin="20,0" />
-                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="20,16" ColumnSpacing="14">
-                        <Border Grid.Column="0" BackgroundColor="#2600E676" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="40" HeightRequest="40">
-                            <Label Text="&#xe897;" FontFamily="MaterialIcons" FontSize="20" TextColor="#00E676" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                            <Label Text="Privacy" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                            <Label Text="Manage your data" Style="{StaticResource MutedText}" />
-                        </VerticalStackLayout>
-                        <Label Grid.Column="2" Text="&#xe5cc;" FontFamily="MaterialIcons" FontSize="22" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
-                    </Grid>
-                </VerticalStackLayout>
-            </Border>
-
-            <Label Style="{StaticResource SectionTitle}" Text="About" Margin="0,20,0,8" />
-            <Border Style="{StaticResource GlassCard}" Padding="20,16">
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
-                    <Label Grid.Column="0" Text="&#xe88e;" FontFamily="MaterialIcons" FontSize="22" TextColor="{StaticResource Primary}" VerticalOptions="Center" />
-                    <VerticalStackLayout Grid.Column="1" Spacing="2">
-                        <Label Text="Moodoo for Windows" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                        <Label Text="Version 1.0.0 · .NET MAUI" Style="{StaticResource MutedText}" />
+            <!-- Compact Profile Header Card with Name & Joined Date -->
+            <Border Style="{StaticResource GlassCard}" Padding="16,14" Margin="0,4,0,14">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14" VerticalOptions="Center">
+                    <Border Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light=#DDD8FB, Dark=#252538}"
+                            Stroke="{StaticResource Primary}"
+                            StrokeThickness="1.5"
+                            StrokeShape="RoundRectangle 30"
+                            WidthRequest="56"
+                            HeightRequest="56"
+                            VerticalOptions="Center">
+                        <Label Text="&#xe7fd;" FontFamily="MaterialIcons" FontSize="30" TextColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3">
+                        <Label Text="{Binding CurrentUser.FullName, TargetNullValue='Mark Developer'}" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                        <Label Text="{Binding CurrentUser.JoinedDateFormatted, TargetNullValue='Joined July 2026'}" Style="{StaticResource MutedText}" FontSize="12" />
                     </VerticalStackLayout>
                 </Grid>
             </Border>
 
-            <Button Style="{StaticResource DangerButton}" Text="Log Out" Command="{Binding LogoutCommand}" Margin="0,28,0,0" />
+            <!-- Quick Stats -->
+            <Grid ColumnDefinitions="*,10,*,10,*" Margin="0,0,0,14">
+                <Border Grid.Column="0" Style="{StaticResource SmallCard}" Padding="10,10">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                        <Label Text="14" FontSize="19" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="Entries" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource SmallCard}" Padding="10,10">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                        <Label Text="7" FontSize="19" FontAttributes="Bold" TextColor="#FF7E00" HorizontalOptions="Center" />
+                        <Label Text="Streak" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="4" Style="{StaticResource SmallCard}" Padding="10,10">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                        <Label Text="😁" FontSize="19" HorizontalOptions="Center" />
+                        <Label Text="Top mood" Style="{StaticResource MutedText}" FontSize="11" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Preferences (Dark Mode Only) -->
+            <Label Style="{StaticResource SectionTitle}" Text="Preferences" Margin="0,0,0,6" FontSize="15" />
+            <Border Style="{StaticResource GlassCard}" Padding="0" Margin="0,0,0,14">
+                <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,12" ColumnSpacing="12">
+                    <Border Grid.Column="0" BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="36" HeightRequest="36">
+                        <Label Text="&#xe3a6;" FontFamily="MaterialIcons" FontSize="18" TextColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                        <Label Text="Dark Mode" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                        <Label Text="Switch app appearance" Style="{StaticResource MutedText}" FontSize="12" />
+                    </VerticalStackLayout>
+                    <Switch Grid.Column="2" IsToggled="{Binding IsDarkTheme}" OnColor="{StaticResource Primary}" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Legal & Policies (Static Buttons: Privacy, Terms of Service, Scope & Limitations) -->
+            <Label Style="{StaticResource SectionTitle}" Text="Legal &amp; Policy" Margin="0,0,0,6" FontSize="15" />
+            <Border Style="{StaticResource GlassCard}" Padding="0" Margin="0,0,0,18">
+                <VerticalStackLayout>
+                    <!-- Privacy Button -->
+                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,12" ColumnSpacing="12">
+                        <Border Grid.Column="0" BackgroundColor="#2600E676" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="36" HeightRequest="36">
+                            <Label Text="&#xe897;" FontFamily="MaterialIcons" FontSize="18" TextColor="#00E676" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Privacy Policy" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                            <Label Text="Your personal data &amp; protection" Style="{StaticResource MutedText}" FontSize="11" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="&#xe5cc;" FontFamily="MaterialIcons" FontSize="18" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#EAEAF4, Dark=#2E2E42}" Margin="16,0" />
+
+                    <!-- Terms of Service Button -->
+                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,12" ColumnSpacing="12">
+                        <Border Grid.Column="0" BackgroundColor="#2600D1FF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="36" HeightRequest="36">
+                            <Label Text="&#xe873;" FontFamily="MaterialIcons" FontSize="18" TextColor="#00D1FF" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Terms of Service" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                            <Label Text="Rules &amp; guidelines for using Moodoo" Style="{StaticResource MutedText}" FontSize="11" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="&#xe5cc;" FontFamily="MaterialIcons" FontSize="18" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
+                    </Grid>
+
+                    <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#EAEAF4, Dark=#2E2E42}" Margin="16,0" />
+
+                    <!-- Scope and Limitations Button -->
+                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,12" ColumnSpacing="12">
+                        <Border Grid.Column="0" BackgroundColor="#26FFB800" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="36" HeightRequest="36">
+                            <Label Text="&#xe88e;" FontFamily="MaterialIcons" FontSize="18" TextColor="#FFB800" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Scope and Limitations" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                            <Label Text="Capabilities &amp; intended usage" Style="{StaticResource MutedText}" FontSize="11" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="&#xe5cc;" FontFamily="MaterialIcons" FontSize="18" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Logout Action Button -->
+            <Button Style="{StaticResource DangerButton}" Text="Log Out" Command="{Binding LogoutCommand}" HeightRequest="48" CornerRadius="12" Margin="0,0,0,0" />
 
         </VerticalStackLayout>
     </ScrollView>
