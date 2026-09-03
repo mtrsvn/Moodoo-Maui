@@ -10,7 +10,7 @@
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
         <Setter Property="Shell.NavBarIsVisible" Value="False" />
-        <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource LightCard}, Dark={StaticResource DarkCard}}" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource LightCard}, Dark={StaticResource DarkBackground}}" />
         <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Primary}" />
         <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Primary}" />
         <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource LightTextMuted}, Dark={StaticResource DarkTabUnselected}}" />

@@ -25,7 +25,7 @@ public partial class ProfileViewModel : BaseViewModel
         _authService = authService;
         _themeService = themeService;
         
-        CurrentUser = _authService.CurrentUser;
+        CurrentUser = _authService.CurrentUser ?? new User();
     }
 
     [RelayCommand]

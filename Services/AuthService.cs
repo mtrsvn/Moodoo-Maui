@@ -4,7 +4,7 @@ namespace MoodooApp.Services;
 
 public class AuthService
 {
-    public User? CurrentUser { get; private set; }
+    public User? CurrentUser { get; private set; } = new User();
 
     public bool IsAuthenticated => CurrentUser != null;
 

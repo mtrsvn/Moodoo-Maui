@@ -5,78 +5,235 @@
              xmlns:models="clr-namespace:MoodooApp.Models"
              xmlns:converters="clr-namespace:MoodooApp.Converters"
              x:Class="MoodooApp.Pages.ChatbotPage"
-             x:DataType="viewmodel:ChatViewModel">
+             x:DataType="viewmodel:ChatViewModel"
+             BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#0F0F17}"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:SenderToColorConverter x:Key="SenderToColorConverter" />
+            <converters:SenderToTextColorConverter x:Key="SenderToTextColorConverter" />
             <converters:SenderToAlignmentConverter x:Key="SenderToAlignmentConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*,Auto" VerticalOptions="Fill" HorizontalOptions="Fill">
 
+        <!-- HEADER -->
         <Border Grid.Row="0"
-                BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#191924}"
-                Stroke="{AppThemeBinding Light=#D1D1D1, Dark=#3A3A55}"
-                StrokeThickness="0,0,0,1" StrokeShape="Rectangle" Padding="20,14">
-            <Grid ColumnDefinitions="Auto,*,Auto">
-                <Border Grid.Column="0" BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 24" WidthRequest="48" HeightRequest="48">
-                    <Label Text="&#xe0c9;" FontFamily="MaterialIcons" FontSize="24" TextColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#171725}"
+                Stroke="{AppThemeBinding Light=#E5E7EB, Dark=#262638}"
+                StrokeThickness="0,0,0,1"
+                Padding="16,12">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" VerticalOptions="Center">
+                <!-- Back button -->
+                <Border Grid.Column="0"
+                        BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#222233}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 18"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=Navigation.PopAsync}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="&#xe5c4;"
+                           FontFamily="MaterialIcons"
+                           FontSize="20"
+                           TextColor="{AppThemeBinding Light=#1F2937, Dark=#F3F4F6}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
                 </Border>
-                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2" Margin="14,0">
-                    <Label Text="Moodie" FontSize="17" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                    <HorizontalStackLayout Spacing="6">
-                        <Border BackgroundColor="#00E676" StrokeThickness="0" StrokeShape="RoundRectangle 4" WidthRequest="8" HeightRequest="8" VerticalOptions="Center" />
-                        <Label Text="Online · AI Companion" FontSize="12" TextColor="{AppThemeBinding Light=#626262, Dark=#A0A0B8}" VerticalOptions="Center" />
-                    </HorizontalStackLayout>
+
+                <!-- Title -->
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
+                    <Label Text="Moodie"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#111827, Dark=#F9FAFB}" />
+                    <Label Text="Emotional Support &amp; Mindfulness"
+                           FontSize="11"
+                           TextColor="{AppThemeBinding Light=#6B7280, Dark=#94A3B8}" />
                 </VerticalStackLayout>
-                <Label Grid.Column="2" Text="&#xe5d4;" FontFamily="MaterialIcons" FontSize="22" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}" VerticalOptions="Center" />
+
+                <!-- Options -->
+                <Border Grid.Column="2"
+                        BackgroundColor="Transparent"
+                        StrokeThickness="0"
+                        WidthRequest="36"
+                        HeightRequest="36"
+                        VerticalOptions="Center">
+                    <Label Text="&#xe5d4;"
+                           FontFamily="MaterialIcons"
+                           FontSize="20"
+                           TextColor="{AppThemeBinding Light=#6B7280, Dark=#94A3B8}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
             </Grid>
         </Border>
 
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Messages}" Margin="16,10">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:ChatMessage">
-                    <VerticalStackLayout Margin="0,4">
-                        <Border Padding="14,12" StrokeThickness="0"
-                                BackgroundColor="{Binding Sender, Converter={StaticResource SenderToColorConverter}}"
-                                HorizontalOptions="{Binding Sender, Converter={StaticResource SenderToAlignmentConverter}}"
-                                StrokeShape="RoundRectangle 18" MaximumWidthRequest="300">
-                            <Label Text="{Binding Text}" FontSize="15" TextColor="White" />
-                        </Border>
-                        <Label Text="{Binding Timestamp, StringFormat='{0:h:mm tt}'}"
-                               FontSize="11" TextColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}"
-                               HorizontalOptions="{Binding Sender, Converter={StaticResource SenderToAlignmentConverter}}"
-                               Margin="4,2,4,0" />
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <!-- MESSAGE STREAM -->
+        <ScrollView Grid.Row="1"
+                    x:Name="ChatScrollView"
+                    VerticalScrollBarVisibility="Default"
+                    VerticalOptions="Fill">
+            <VerticalStackLayout x:Name="MessagesContainer"
+                                 Padding="16,12"
+                                 Spacing="14"
+                                 MaximumWidthRequest="720"
+                                 HorizontalOptions="Center">
 
-        <HorizontalStackLayout Grid.Row="1" IsVisible="{Binding IsBusy}" VerticalOptions="End" HorizontalOptions="Start" Margin="30,0,0,16" Spacing="8">
-            <Border BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="12,10">
-                <Label Text="Moodie is typing..." FontSize="13" TextColor="{StaticResource Primary}" />
-            </Border>
-        </HorizontalStackLayout>
+                <!-- Prompt Suggestion Pills -->
+                <FlexLayout Wrap="Wrap" JustifyContent="Center" AlignItems="Center" Margin="0,4,0,8">
+                    <Border BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#1E1E2D}"
+                            StrokeThickness="1"
+                            Stroke="{AppThemeBinding Light=#E5E7EB, Dark=#2D2D3F}"
+                            StrokeShape="RoundRectangle 20"
+                            Padding="14,8"
+                            Margin="4,4">
+                        <Label Text="🌱 Breathing exercise" FontSize="12" TextColor="{AppThemeBinding Light=#4B5563, Dark=#CBD5E1}" />
+                    </Border>
+                    <Border BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#1E1E2D}"
+                            StrokeThickness="1"
+                            Stroke="{AppThemeBinding Light=#E5E7EB, Dark=#2D2D3F}"
+                            StrokeShape="RoundRectangle 20"
+                            Padding="14,8"
+                            Margin="4,4">
+                        <Label Text="💭 Reflect on my mood" FontSize="12" TextColor="{AppThemeBinding Light=#4B5563, Dark=#CBD5E1}" />
+                    </Border>
+                    <Border BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#1E1E2D}"
+                            StrokeThickness="1"
+                            Stroke="{AppThemeBinding Light=#E5E7EB, Dark=#2D2D3F}"
+                            StrokeShape="RoundRectangle 20"
+                            Padding="14,8"
+                            Margin="4,4">
+                        <Label Text="✨ Positive affirmations" FontSize="12" TextColor="{AppThemeBinding Light=#4B5563, Dark=#CBD5E1}" />
+                    </Border>
+                </FlexLayout>
 
+                <!-- Message Bubbles -->
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Messages}" Spacing="12">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:ChatMessage">
+                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto">
+                                <!-- Bot Avatar -->
+                                <Border Grid.Column="0"
+                                        IsVisible="{Binding IsBot}"
+                                        BackgroundColor="#207E66EF"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 14"
+                                        WidthRequest="30"
+                                        HeightRequest="30"
+                                        VerticalOptions="Start"
+                                        Margin="0,2,10,0">
+                                    <Label Text="&#xe0b7;"
+                                           FontFamily="MaterialIcons"
+                                           FontSize="15"
+                                           TextColor="{StaticResource Primary}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                </Border>
+
+                                <!-- Bubble -->
+                                <Border Grid.Column="1"
+                                        Padding="14,10"
+                                        BackgroundColor="{Binding Sender, Converter={StaticResource SenderToColorConverter}}"
+                                        HorizontalOptions="{Binding Sender, Converter={StaticResource SenderToAlignmentConverter}}"
+                                        StrokeShape="RoundRectangle 18"
+                                        MaximumWidthRequest="460"
+                                        StrokeThickness="0">
+                                    <VerticalStackLayout Spacing="3">
+                                        <Label Text="{Binding Text}"
+                                               FontSize="14"
+                                               LineHeight="1.3"
+                                               TextColor="{Binding Sender, Converter={StaticResource SenderToTextColorConverter}}" />
+                                        <Label Text="{Binding Timestamp, StringFormat='{0:h:mm tt}'}"
+                                               FontSize="9"
+                                               Opacity="0.6"
+                                               HorizontalOptions="End"
+                                               TextColor="{Binding Sender, Converter={StaticResource SenderToTextColorConverter}}" />
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <!-- User right-side spacer -->
+                                <BoxView Grid.Column="2"
+                                         IsVisible="{Binding IsUser}"
+                                         WidthRequest="4"
+                                         Color="Transparent" />
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <!-- Typing indicator -->
+                <Border IsVisible="{Binding IsBusy}"
+                        HorizontalOptions="Start"
+                        BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1A1A2A}"
+                        Stroke="{StaticResource Primary}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 14"
+                        Padding="16,10"
+                        Margin="40,0,0,0">
+                    <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                        <BoxView x:Name="Dot1" WidthRequest="6" HeightRequest="6" CornerRadius="3" Color="{StaticResource Primary}" VerticalOptions="Center" />
+                        <BoxView x:Name="Dot2" WidthRequest="6" HeightRequest="6" CornerRadius="3" Color="{StaticResource Primary}" VerticalOptions="Center" />
+                        <BoxView x:Name="Dot3" WidthRequest="6" HeightRequest="6" CornerRadius="3" Color="{StaticResource Primary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BOTTOM INPUT BAR -->
         <Border Grid.Row="2"
-                BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#191924}"
-                Stroke="{AppThemeBinding Light=#D1D1D1, Dark=#3A3A55}"
-                StrokeThickness="1,0,0,0" StrokeShape="Rectangle" Padding="16,12">
-            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
-                <Border Grid.Column="0" BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#252538}"
-                        StrokeThickness="0" StrokeShape="RoundRectangle 24" Padding="16,10">
-                    <Entry Text="{Binding NewMessage}" Placeholder="Message Moodie..."
-                           ReturnType="Send" ReturnCommand="{Binding SendMessageCommand}"
-                           PlaceholderColor="{AppThemeBinding Light=#9E9E9E, Dark=#6B6B8E}"
-                           TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}"
-                           BackgroundColor="Transparent" FontSize="15" />
+                BackgroundColor="Transparent"
+                StrokeThickness="0"
+                Padding="16,8,16,12">
+            <VerticalStackLayout Spacing="8">
+
+                <!-- Main Input Pill -->
+                <Border BackgroundColor="{AppThemeBinding Light=#F3F4F6, Dark=#1E1E2D}"
+                        Stroke="{AppThemeBinding Light=#E5E7EB, Dark=#2D2D3F}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 24"
+                        Padding="16,4,8,4"
+                        HorizontalOptions="Fill">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" VerticalOptions="Center">
+                        <Entry Grid.Column="0"
+                               x:Name="MessageEntry"
+                               Text="{Binding NewMessage}"
+                               Placeholder="Enter message"
+                               ReturnType="Send"
+                               ReturnCommand="{Binding SendMessageCommand}"
+                               PlaceholderColor="{AppThemeBinding Light=#9CA3AF, Dark=#64748B}"
+                               TextColor="{AppThemeBinding Light=#111827, Dark=#F9FAFB}"
+                               BackgroundColor="Transparent"
+                               FontSize="15"
+                               VerticalOptions="Center" />
+
+                        <!-- Send Button -->
+                        <ImageButton Grid.Column="1"
+                                     Command="{Binding SendMessageCommand}"
+                                     BackgroundColor="{StaticResource Primary}"
+                                     WidthRequest="36"
+                                     HeightRequest="36"
+                                     CornerRadius="18"
+                                     Padding="8"
+                                     VerticalOptions="Center">
+                            <ImageButton.Source>
+                                <FontImageSource Glyph="&#xe163;"
+                                                 FontFamily="MaterialIcons"
+                                                 Size="18"
+                                                 Color="#FFFFFF" />
+                            </ImageButton.Source>
+                        </ImageButton>
+                    </Grid>
                 </Border>
-                <Border Grid.Column="1" BackgroundColor="{StaticResource Primary}" StrokeThickness="0" StrokeShape="RoundRectangle 22" WidthRequest="44" HeightRequest="44">
-                    <Label Text="&#xe163;" FontFamily="MaterialIcons" FontSize="20" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
-                </Border>
-            </Grid>
+
+
+            </VerticalStackLayout>
         </Border>
 
     </Grid>

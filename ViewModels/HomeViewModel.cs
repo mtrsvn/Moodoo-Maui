@@ -44,6 +44,12 @@ public partial class HomeViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private async Task OpenChatbotAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(Pages.ChatbotPage));
+    }
+
+    [RelayCommand]
     private async Task OpenMoodDetailAsync(MoodEntry mood)
     {
         if (mood == null) return;

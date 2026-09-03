@@ -40,14 +40,17 @@ public class ChatMessage
     public string Text { get; set; } = string.Empty;
     public string Sender { get; set; } = "user";
     public DateTime Timestamp { get; set; } = DateTime.Now;
+
+    public bool IsUser => Sender == "user";
+    public bool IsBot => Sender == "bot";
 }
 
 public class User
 {
     public string Uid { get; set; } = Guid.NewGuid().ToString();
-    public string Username { get; set; } = "Mark";
-    public string Email { get; set; } = "mark@moodoo.app";
-    public string FullName { get; set; } = "Mark Developer";
+    public string Username { get; set; } = "John";
+    public string Email { get; set; } = "john.doe@moodoo.app";
+    public string FullName { get; set; } = "John Doe";
     public bool IsVerified { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Today.AddMonths(-2).AddDays(-14);
     public string JoinedDateFormatted => $"Joined {CreatedAt:MMMM yyyy}";

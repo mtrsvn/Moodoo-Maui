@@ -20,12 +20,6 @@
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate pages:InsightsPage}" />
         </Tab>
-        <Tab Title="Chatbot">
-            <Tab.Icon>
-                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe0b7;" Size="22" />
-            </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate pages:ChatbotPage}" />
-        </Tab>
         <Tab Title="Profile">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe7fd;" Size="22" />
