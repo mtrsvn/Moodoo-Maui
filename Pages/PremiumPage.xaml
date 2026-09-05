@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:MoodooApp.ViewModels"
+             x:Class="MoodooApp.Pages.PremiumPage"
+             x:DataType="viewmodel:PremiumViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light=#F7F7FA, Dark=#151522}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,40,20,40" Spacing="0">
+            
+            <!-- Header Section -->
+            <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,20">
+                <Border Grid.Column="0"
+                        StrokeThickness="0"
+                        BackgroundColor="#267E66EF"
+                        StrokeShape="RoundRectangle 20"
+                        WidthRequest="40"
+                        HeightRequest="40">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label Text="&#xe5cb;" FontFamily="MaterialIcons" FontSize="24" TextColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+            </Grid>
+            
+            <Label Text="Unlock Moodoo" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" Margin="0,0,0,5" />
+            <Label Text="PREMIUM" FontSize="34" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{StaticResource Primary}" Margin="0,0,0,10">
+                <Label.TextDecorations>
+                    Underline
+                </Label.TextDecorations>
+            </Label>
+            
+            <Label Text="Get advanced insights, unlimited chatbot conversations, and custom mood themes." 
+                   HorizontalTextAlignment="Center" 
+                   Style="{StaticResource MutedText}" 
+                   FontSize="14" 
+                   Margin="40,0,40,30" />
+
+            <!-- Benefits List -->
+            <VerticalStackLayout Spacing="15" Margin="0,0,0,30">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+                    <Label Grid.Column="0" Text="&#xe838;" FontFamily="MaterialIcons" FontSize="20" TextColor="#FFB800" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="Unlimited AI Chatbot Access" FontSize="15" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" VerticalOptions="Center" />
+                </Grid>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+                    <Label Grid.Column="0" Text="&#xe838;" FontFamily="MaterialIcons" FontSize="20" TextColor="#FFB800" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="Advanced Data &amp; Insights" FontSize="15" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" VerticalOptions="Center" />
+                </Grid>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+                    <Label Grid.Column="0" Text="&#xe838;" FontFamily="MaterialIcons" FontSize="20" TextColor="#FFB800" VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="Custom App Themes" FontSize="15" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" VerticalOptions="Center" />
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Plan Selection -->
+            <Grid ColumnDefinitions="*,15,*" Margin="0,0,0,30">
+                
+                <!-- Monthly Plan -->
+                <Border Grid.Column="0" 
+                        Stroke="{StaticResource Primary}" 
+                        BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1E1E2C}"
+                        StrokeShape="RoundRectangle 16" 
+                        Padding="15,20">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectMonthlyCommand}" />
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsMonthlySelected}" Value="True">
+                            <Setter Property="StrokeThickness" Value="2" />
+                            <Setter Property="Shadow">
+                                <Setter.Value>
+                                    <Shadow Brush="#7E66EF" Offset="0,4" Radius="10" Opacity="0.3" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsMonthlySelected}" Value="False">
+                            <Setter Property="StrokeThickness" Value="0.5" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                        <Label Text="Monthly" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                        <Label Text="$4.99" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="/ month" FontSize="12" Style="{StaticResource MutedText}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Yearly Plan -->
+                <Border Grid.Column="2" 
+                        Stroke="{StaticResource Primary}" 
+                        BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1E1E2C}"
+                        StrokeShape="RoundRectangle 16" 
+                        Padding="15,20">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectYearlyCommand}" />
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsYearlySelected}" Value="True">
+                            <Setter Property="StrokeThickness" Value="2" />
+                            <Setter Property="Shadow">
+                                <Setter.Value>
+                                    <Shadow Brush="#7E66EF" Offset="0,4" Radius="10" Opacity="0.3" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsYearlySelected}" Value="False">
+                            <Setter Property="StrokeThickness" Value="0.5" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                        <Border BackgroundColor="#FF7E00" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="8,4" HorizontalOptions="Center" Margin="0,0,0,5">
+                            <Label Text="SAVE 50%" FontSize="10" FontAttributes="Bold" TextColor="White" />
+                        </Border>
+                        <Label Text="Yearly" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
+                        <Label Text="$29.99" FontSize="24" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalOptions="Center" />
+                        <Label Text="/ year" FontSize="12" Style="{StaticResource MutedText}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                
+            </Grid>
+
+            <!-- Subscribe Action -->
+            <Button Text="Start Premium" 
+                    Command="{Binding SubscribeCommand}" 
+                    HeightRequest="54" 
+                    CornerRadius="27" 
+                    FontAttributes="Bold" 
+                    FontSize="18"
+                    Margin="0,0,0,15">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="1,0">
+                        <GradientStop Color="#7E66EF" Offset="0.1" />
+                        <GradientStop Color="#5A3EE8" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            
+            <Label Text="Cancel anytime. Terms and Conditions apply." 
+                   HorizontalOptions="Center" 
+                   Style="{StaticResource MutedText}" 
+                   FontSize="11" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
