@@ -138,7 +138,6 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- FAB Backdrop Overlay (dim screen on open covering entire page edges) -->
         <BoxView x:Name="FabBackdrop"
                  BackgroundColor="#80000000"
                  Margin="-50,-100,-50,-100"

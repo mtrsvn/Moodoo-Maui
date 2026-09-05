@@ -64,11 +64,10 @@ public partial class HomePage : ContentPage
         FabBackdrop.InputTransparent = false;
         SpeedDialMenu.InputTransparent = false;
 
-        // Animate FAB icon rotation (+ to x)
         var rotateTask = FabIcon.RotateToAsync(45, 200, Easing.CubicOut);
         var backdropFade = FabBackdrop.FadeToAsync(1, 200);
 
-        // Animate unified SpeedDialMenu (Fade + Scale + Translate with smooth spring)
+       
         var menuFade = SpeedDialMenu.FadeToAsync(1, 220, Easing.CubicOut);
         var menuScale = SpeedDialMenu.ScaleToAsync(1, 220, Easing.SpringOut);
         var menuTrans = SpeedDialMenu.TranslateToAsync(0, 0, 220, Easing.CubicOut);

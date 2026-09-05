@@ -8,22 +8,14 @@ namespace MoodooApp.ViewModels;
 public partial class ProfileViewModel : BaseViewModel
 {
     private readonly AuthService _authService;
-    private readonly ThemeService _themeService;
 
     [ObservableProperty]
     private User? _currentUser;
 
-    public bool IsDarkTheme
-    {
-        get => _themeService.IsDark;
-        set => _themeService.IsDark = value;
-    }
-
-    public ProfileViewModel(AuthService authService, ThemeService themeService)
+    public ProfileViewModel(AuthService authService)
     {
         Title = "Profile";
         _authService = authService;
-        _themeService = themeService;
         
         CurrentUser = _authService.CurrentUser ?? new User();
     }

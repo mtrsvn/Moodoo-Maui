@@ -51,20 +51,6 @@
                 </Border>
             </Grid>
 
-            <!-- Preferences (Dark Mode Only) -->
-            <Label Style="{StaticResource SectionTitle}" Text="Preferences" Margin="0,0,0,6" FontSize="15" />
-            <Border Style="{StaticResource GlassCard}" Padding="0" Margin="0,0,0,14">
-                <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,12" ColumnSpacing="12">
-                    <Border Grid.Column="0" BackgroundColor="#267E66EF" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="36" HeightRequest="36">
-                        <Label Text="&#xe3a6;" FontFamily="MaterialIcons" FontSize="18" TextColor="{StaticResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                    </Border>
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                        <Label Text="Dark Mode" FontSize="15" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#1A1A1A, Dark=#E8E8E8}" />
-                        <Label Text="Switch app appearance" Style="{StaticResource MutedText}" FontSize="12" />
-                    </VerticalStackLayout>
-                    <Switch Grid.Column="2" IsToggled="{Binding IsDarkTheme}" OnColor="{StaticResource Primary}" VerticalOptions="Center" />
-                </Grid>
-            </Border>
 
             <!-- Legal & Policies (Static Buttons: Privacy, Terms of Service, Scope & Limitations) -->
             <Label Style="{StaticResource SectionTitle}" Text="Legal &amp; Policy" Margin="0,0,0,6" FontSize="15" />
