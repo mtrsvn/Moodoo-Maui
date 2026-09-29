@@ -3,28 +3,51 @@
     x:Class="MoodooApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:MoodooApp"
     xmlns:pages="clr-namespace:MoodooApp.Pages"
     Shell.FlyoutBehavior="Disabled">
 
-    <TabBar>
-        <Tab Title="Home">
-            <Tab.Icon>
-                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe88a;" Size="22" />
-            </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate pages:HomePage}" />
-        </Tab>
-        <Tab Title="Insights">
-            <Tab.Icon>
-                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe6e1;" Size="22" />
-            </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate pages:InsightsPage}" />
-        </Tab>
-        <Tab Title="Profile">
-            <Tab.Icon>
-                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xe7fd;" Size="22" />
-            </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate pages:ProfilePage}" />
-        </Tab>
+    <!-- Login -->
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate pages:LoginPage}"
+        Route="LoginPage" />
+
+    <!-- Main App -->
+    <TabBar Route="MainTabs">
+
+        <ShellContent
+            Title="Home"
+            Route="HomePage"
+            ContentTemplate="{DataTemplate pages:HomePage}">
+            <ShellContent.Icon>
+                <FontImageSource
+                    Glyph="&#xe88a;"
+                    FontFamily="MaterialIcons" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent
+            Title="Insights"
+            Route="InsightsPage"
+            ContentTemplate="{DataTemplate pages:InsightsPage}">
+            <ShellContent.Icon>
+                <FontImageSource
+                    Glyph="&#xe6e1;"
+                    FontFamily="MaterialIcons" />
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent
+            Title="Profile"
+            Route="ProfilePage"
+            ContentTemplate="{DataTemplate pages:ProfilePage}">
+            <ShellContent.Icon>
+                <FontImageSource
+                    Glyph="&#xe7fd;"
+                    FontFamily="MaterialIcons" />
+            </ShellContent.Icon>
+        </ShellContent>
+
     </TabBar>
+
 </Shell>

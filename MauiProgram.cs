@@ -10,6 +10,7 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
+
         builder
             .UseMauiApp<App>()
             .ConfigureFonts(fonts =>
@@ -23,11 +24,14 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
+        // Services
         builder.Services.AddSingleton<ThemeService>();
         builder.Services.AddSingleton<MoodService>();
         builder.Services.AddSingleton<AuthService>();
         builder.Services.AddSingleton<ChatService>();
+        builder.Services.AddSingleton<DatabaseService>();
 
+        // ViewModels
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<MoodViewModel>();
         builder.Services.AddTransient<InsightsViewModel>();
@@ -35,7 +39,10 @@ public static class MauiProgram
         builder.Services.AddTransient<MoodDetailViewModel>();
         builder.Services.AddTransient<ProfileViewModel>();
         builder.Services.AddTransient<ChatViewModel>();
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<RegisterViewModel>();
 
+        // Pages
         builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<MoodLogPage>();
         builder.Services.AddTransient<InsightsPage>();
@@ -43,6 +50,8 @@ public static class MauiProgram
         builder.Services.AddTransient<MoodDetailPage>();
         builder.Services.AddTransient<ProfilePage>();
         builder.Services.AddTransient<ChatbotPage>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegisterPage>();
 
         return builder.Build();
     }
